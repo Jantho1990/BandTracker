@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Band as Band;
+use Session;
+
 class BandController extends Controller
 {
     /**
@@ -13,7 +16,8 @@ class BandController extends Controller
      */
     public function index()
     {
-        //
+        $bands = Band::all();
+        return view('bands.index', ['bands' => $bands]);
     }
 
     /**
@@ -23,7 +27,7 @@ class BandController extends Controller
      */
     public function create()
     {
-        //
+        return view('bands.create');
     }
 
     /**
@@ -34,7 +38,27 @@ class BandController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      // Validate the data
+      $this->validate([
+        'name' => 'required|unique:bands,name|max:255|alpha_dash',
+        'start_date' => 'sometimes|date',
+        'website' => '',
+        'still_active' => 'sometimes|boolean'
+      ]);
+
+      // Extract and store data
+      $band = new Band();
+      $band->name = $request->name;
+      $band->start_date = $request->start_date;
+      $band->website = $request->website;
+      $band->still_active = $request->still_active;
+      $band->save();
+
+      // Flash message
+      Session::flash('success', "The band $band->name was successfully saved!");
+
+      // Return show view
+      return view('bands.show', ['id' => $band->id]);
     }
 
     /**
