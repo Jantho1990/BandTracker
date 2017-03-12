@@ -1,22 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <title>@yield('page_title')</title>
-
-    <!-- Stylesheets -->
-    @include('partials._stylesheets')
-
-    <!-- Header Scripts -->
-    @include('partials._headerscripts')
+    @include('partials._head')
 
   </head>
   <body>
-    @yield('header')
+    @include('partials._header')
     <main class="container-fluid">
       @yield('content')
     </main>
-    @yield('footer')
+    @include('partials._footer')
 
     <!-- Footer Scripts -->
     @include('partials._footerscripts')
