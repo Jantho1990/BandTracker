@@ -125,6 +125,13 @@ class BandController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $band = Band::find($id);
+      $albums = $band->albums;
+      foreach($albums as $album){
+        $album->delete();
+      }
+      $band->delete();
+      Flash::session('success', "$band->name and their albums were successfully deleted.");
+      return redirect()->route('bands.index');
     }
 }
