@@ -145,11 +145,5 @@ class AlbumController extends Controller
       $album->delete();
       Flash::session('success', "$album->name was successfully deleted.");
       return redirect()->route('albums.index');
-
-      // Delete the album
-
-      // Flash message
-
-      // Return the albums index
     }
 }
