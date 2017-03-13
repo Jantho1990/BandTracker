@@ -1,14 +1,17 @@
 @extends('layouts.public')
 
-@section('title', 'Albums by ' . $band->name))
+@section('title', 'Albums by ' . $band->name)
 
 @section('content')
-<div class="row">
-  <div class="col-md-8 col-md-offset-2">
+<div class="row title-line">
+  <div class="col-sm-8 col-md-6 col-md-offset-2">
     <h1>Albums by {{ $band->name }}</h1>
   </div>
+  <div class="col-sm-2 col-sm-offset-2 col-md-2 col-md-offset-0">
+    <a class="btn btn-success btn-headline" href="/bands/{{ $band->id }}/albums/create">Add New Album</a>
+  </div>
 </div>
-<div class="row">
+<div class="row data">
   <div class="col-md-8 col-md-offset-2">
     <table class='table'>
       <thead>
