@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Album as Album;
+use App\Band as Band;
 use Session;
 
 class AlbumController extends Controller
@@ -14,10 +15,14 @@ class AlbumController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($band_id)
     {
-      $albums = Album::all();
-      return view('albums.index', ['albums' => $albums]);
+      $albums = Album::where('band_id', $band_id)->get();
+      //dd($albums);
+      //$band = Band::find(intval($band_id));
+      //dd($band);
+      dd($albums[1]->band->name);
+      return view('albums.index', ['albums' => $albums, 'band' => $band]);
     }
 
     /**

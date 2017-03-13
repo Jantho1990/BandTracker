@@ -14,4 +14,4 @@
 Route::get('/', 'BandController@index');
 
 Route::resource('bands', 'BandController');
-Route::resource('albums', 'AlbumController');
+Route::resource('bands/{band_id}/albums', 'AlbumController');

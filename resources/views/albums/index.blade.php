@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'Albums by ' . $albums[0]->band->name)
+@section('title', 'Albums by ' . $band->name))
 
 @section('content')
 <div class="row">
