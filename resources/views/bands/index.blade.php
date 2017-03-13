@@ -1,21 +1,18 @@
 @extends('layouts.public')
 
-@section('title', 'Albums by ' . $albums[0]->band->name)
+@section('title', 'Bands')
 
 @section('content')
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
     <ul class='tbl-list'>
-      @foreach($albums as $album)
+      @foreach($bands as $band)
         <li class='tbl-item'>
           <ul>
-            <li>{{ $album->name }}</li>
-            <li>{{ $album->recorded_date }}</li>
-            <li>{{ $album->release_date }}</li>
-            <li>{{ $album->number_of_tracks }}</li>
-            <li>{{ $album->label }}</li>
-            <li>{{ $album->producer }}</li>
-            <li>{{ $album->genre }}</li>
+            <li>{{ $band->name }}</li>
+            <li>{{ $band->start_date }}</li>
+            <li>{{ $band->website }}</li>
+            <li>{{ $band->still_active }}</li>
           </ul>
         </li>
       @endforeach

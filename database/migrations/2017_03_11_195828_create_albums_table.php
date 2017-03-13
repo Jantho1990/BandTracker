@@ -17,8 +17,8 @@ class CreateAlbumsTable extends Migration
             $table->increments('id');
             $table->integer('band_id');
             $table->string('name');
-            $table->date('recorded_date');
-            $table->date('release_date');
+            $table->string('recorded_date');
+            $table->string('release_date');
             $table->integer('number_of_tracks');
             $table->string('label');
             $table->string('producer');

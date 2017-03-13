@@ -11,6 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'BandController@index');
+
+Route::resource('bands', 'BandController');
+Route::resource('albums', 'AlbumController');
