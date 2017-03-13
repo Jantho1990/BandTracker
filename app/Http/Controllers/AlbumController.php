@@ -18,7 +18,12 @@ class AlbumController extends Controller
     public function index($band_id)
     {
       $albums = Album::where('band_id', $band_id)->get();
-      return view('albums.index', ['albums' => $albums]);
+      if(count($albums) !== 0){
+        $band = $albums[0]->band;
+      }else{
+        $band = Band::find($band_id);
+      }
+      return view('albums.index', ['albums' => $albums, 'band' => $band]);
     }
 
     /**
