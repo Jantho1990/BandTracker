@@ -39,19 +39,20 @@ class BandController extends Controller
     public function store(Request $request)
     {
       // Validate the data
-      $this->validate([
+      $this->validate($request, [
         'name' => 'required|unique:bands,name|max:255|alpha_dash',
-        'start_date' => 'sometimes|date',
+        'start_date' => '',
         'website' => '',
-        'still_active' => 'sometimes|boolean'
+        'still_active' => ''
       ]);
+      //dd($request);
 
       // Extract and store data
       $band = new Band();
       $band->name = $request->name;
       $band->start_date = $request->start_date;
       $band->website = $request->website;
-      $band->still_active = $request->still_active;
+      $band->still_active = (bool)$request->still_active;
       $band->save();
 
       // Flash message
@@ -95,7 +96,7 @@ class BandController extends Controller
     public function update(Request $request, $id)
     {
       // Validate the data
-      $this->validate([
+      $this->validate($request, [
         'name' => 'required|max:255|alpha_dash',
         'start_date' => 'sometimes|date',
         'website' => '',

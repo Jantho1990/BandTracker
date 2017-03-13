@@ -1,0 +1,44 @@
+@extends('layouts.public')
+
+@section('headerscripts')
+
+@stop
+
+@section('title', 'Add New Band')
+
+@section('content')
+<div class="row title-line">
+  <div class="col-sm-8 col-md-6 col-md-offset-2">
+    <h1>Add New Band</h1>
+  </div>
+</div>
+<div class="row data">
+  <div class="col-md-8 col-md-offset-2">
+    <form class="form" action="/bands" method="post">
+      {{ csrf_field() }}
+      <div class="form-group">
+        <label for="name">Band Name:</label>
+        <input class="form-control" type="text" name="name" value="">
+      </div>
+      <div class="form-group">
+        <label for="start_date">Start Date:</label>
+        <input class="form-control" type="text" name="start_date" value="">
+      </div>
+      <div class="form-group">
+        <label for="website">Website:</label>
+        <input class="form-control" type="text" name="website" value="">
+      </div>
+      <div class="form-group">
+        <label for="still_active">Still Active:</label>
+        <select class="form-control" name="still_active">
+          <option value="0">False</option>
+          <option value="1">True</option>
+        </select>
+      </div>
+
+      <button type="submit" name="button">Submit</button>
+    </form>
+  </div>
+</div>
+
+@stop

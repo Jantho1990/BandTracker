@@ -45,6 +45,13 @@ header#header #app-title {
   background-color: #404040;
 }
 
+/**
+ *  Forms
+ */
+.form button {
+  color: #202020;
+}
+
 @media screen and (max-width: 767px){
   .title-line {
     text-align: center;

@@ -45,7 +45,7 @@ class AlbumController extends Controller
     public function store(Request $request)
     {
       // Validate the data
-      $this->validate([
+      $this->validate($request, [
         'band_id' => 'required|unique:bands,id|integer',
         'name' => 'required|max:255|alpha_dash',
         'recorded_date' => 'sometimes|date',
@@ -109,7 +109,7 @@ class AlbumController extends Controller
     public function update(Request $request, $id)
     {
       // Validate the data
-      $this->validate([
+      $this->validate($request, [
         'band_id' => 'required|unique:bands,id|integer',
         'name' => 'required|max:255|alpha_dash',
         'recorded_date' => 'sometimes|date',
