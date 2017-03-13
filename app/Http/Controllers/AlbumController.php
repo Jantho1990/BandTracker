@@ -18,11 +18,7 @@ class AlbumController extends Controller
     public function index($band_id)
     {
       $albums = Album::where('band_id', $band_id)->get();
-      //dd($albums);
-      //$band = Band::find(intval($band_id));
-      //dd($band);
-      dd($albums[1]->band->name);
-      return view('albums.index', ['albums' => $albums, 'band' => $band]);
+      return view('albums.index', ['albums' => $albums]);
     }
 
     /**
