@@ -29,7 +29,7 @@
         @foreach($albums as $album)
             <tr>
               <td>
-                <a target="_blank" href="/bands/{{ $band->id }}/albums/{{ $album->id }}">{{ $album->name }}</a>
+                <a href="/bands/{{ $band->id }}/albums/{{ $album->id }}">{{ $album->name }}</a>
               </td>
               <td>{{ $album->recorded_date }}</td>
               <td>{{ $album->release_date }}</td>
