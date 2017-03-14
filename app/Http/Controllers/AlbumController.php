@@ -81,7 +81,7 @@ class AlbumController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($band_id, $id)
     {
         $album = Album::find($id);
         return view('albums.show', ['album' => $album]);
