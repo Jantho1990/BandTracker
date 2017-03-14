@@ -13,5 +13,11 @@
 
 Route::get('/', 'BandController@index');
 
-Route::resource('bands/{band_id}/albums', 'AlbumController');
+Route::get('albums/create', 'AlbumController@create');
+Route::post('albums', 'AlbumController@store');
+Route::put('albums/{id}/edit', 'AlbumController@edit');
+Route::delete('albums/{id}', 'AlbumController@delete');
+Route::resource('bands/{band_id}/albums', 'AlbumController', [
+  'except' => ['store', 'edit', 'delete']
+]);
 Route::resource('bands', 'BandController');

@@ -31,9 +31,10 @@ class AlbumController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($band_id = 0)
     {
-        return view('albums.create');
+        $bands = Band::all();
+        return view('albums.create', ['band_id' => $band_id, 'bands' => $bands]);
     }
 
     /**
