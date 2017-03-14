@@ -15,13 +15,14 @@ class AlbumController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($band_id)
+    public function index(Band $band = null)
     {
-      $albums = Album::where('band_id', $band_id)->get();
-      if(count($albums) !== 0){
-        $band = $albums[0]->band;
+      //dd($band);
+      if($band !== null && $band->exists){
+        $albums = Album::where('band_id', $band->id)->get();
       }else{
-        $band = Band::find($band_id);
+        $albums = Album::all();
+        $band = null;
       }
       return view('albums.index', ['albums' => $albums, 'band' => $band]);
     }
