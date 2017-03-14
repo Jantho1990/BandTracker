@@ -10,4 +10,17 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public function sort(&$collection, $sort_param, $sort_dir = null)
+    {
+      switch($sort_dir){
+        case 'desc':
+          $collection = $collection->sortByDesc($sort_param);
+          break;
+        default:
+          //dd($albums);
+          $collection = $collection->sortBy($sort_param);
+      }
+      $collection->values()->all();
+    }
 }

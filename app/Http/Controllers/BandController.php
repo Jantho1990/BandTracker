@@ -14,9 +14,17 @@ class BandController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $bands = Band::all();
+        // Apply sorting, if necessary.
+        if($request->input('sort') !== ''){
+          $this->sort(
+            $bands,
+            $request->input('sort'),
+            $request->input('sortdirection')
+          );
+        }
         return view('bands.index', ['bands' => $bands]);
     }
 

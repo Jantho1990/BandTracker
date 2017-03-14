@@ -15,7 +15,7 @@ class AlbumController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Band $band = null)
+    public function index(Request $request, Band $band = null)
     {
       //dd($band);
       if($band !== null && $band->exists){
@@ -23,6 +23,14 @@ class AlbumController extends Controller
       }else{
         $albums = Album::all();
         $band = null;
+      }
+      // Apply sorting, if necessary.
+      if($request->input('sort') !== ''){
+        $this->sort(
+          $albums,
+          $request->input('sort'),
+          $request->input('sortdirection')
+        );
       }
       return view('albums.index', ['albums' => $albums, 'band' => $band]);
     }
