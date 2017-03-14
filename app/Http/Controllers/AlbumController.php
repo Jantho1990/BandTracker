@@ -17,7 +17,7 @@ class AlbumController extends Controller
      */
     public function index(Request $request, Band $band = null)
     {
-      //dd($band);
+      //dd($request);
       if($band !== null && $band->exists){
         $albums = Album::where('band_id', $band->id)->get();
       }else{
@@ -26,13 +26,40 @@ class AlbumController extends Controller
       }
       // Apply sorting, if necessary.
       if($request->input('sort') !== ''){
-        $this->sort(
-          $albums,
-          $request->input('sort'),
-          $request->input('sortdirection')
-        );
+        $sort = $request->input('sort');
+        $sortdirection = $request->sortdirection === 'asc' ? 'desc' : 'asc';
+        // Special case for band name.
+        if($sort === 'band'){
+          // We only need to sort if band is null, as otherwise
+          // there is only one band.
+          if($band === null){
+            $_albums = [];
+            foreach($albums as $album){
+              if(!isset($_albums[$album->band->name])){
+                $_albums[$album->band->name] = [];
+              }
+              array_push($_albums[$album->band->name], $album);
+            }
+            ksort($_albums);
+            //dd($_albums);
+            $ct = 0;
+            foreach($_albums as $_a=>$_album){
+              foreach($_album as $a=>$album){
+                echo($album->name . "\n");
+                $albums->shift();
+                $albums->put($ct++, $album);
+                echo $ct . "\n";
+              }
+            }
+            $albums->all();
+            //dd($albums);
+          }
+        }
+        $this->sort($albums, $sort, $sortdirection);
+
       }
-      return view('albums.index', ['albums' => $albums, 'band' => $band]);
+      //dd($request);
+      return view('albums.index', ['albums' => $albums, 'band' => $band, 'sort' => $sort, 'sortdirection' => $sortdirection]);
     }
 
     /**

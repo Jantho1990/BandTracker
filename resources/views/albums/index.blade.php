@@ -14,16 +14,17 @@
 <div class="row data">
   <div class="col-md-8 col-md-offset-2 table-responsive">
     <table class='table'>
+      {!! dd(Route::current()) !!}
       <thead>
         <tr>
-          <th>Band Name</th>
-          <th>Album Name</th>
-          <th>Recorded Date</th>
-          <th>Release Date</th>
-          <th>Number of Tracks</th>
-          <th>Label</th>
-          <th>Producer</th>
-          <th>Genre</th>
+          <th><a href="{{ route(Route::currentRouteName(), ['sort' => 'band', 'sortdirection' => 'band' === $sort ? $sortdirection : 'asc']) }}">Band Name</a></th>
+          <th><a href="{{ route(Route::currentRouteName(), ['sort' => 'name', 'sortdirection' => 'name' === $sort ? $sortdirection : 'asc']) }}">Album Name</a></th>
+          <th><a href="{{ route(Route::currentRouteName(), ['sort' => 'recorded_date', 'sortdirection' => 'recorded_date' === $sort ? $sortdirection : 'asc']) }}">Recorded Date</a></th>
+          <th><a href="{{ route(Route::currentRouteName(), ['sort' => 'release_date', 'sortdirection' => 'release_date' === $sort ? $sortdirection : 'asc']) }}">Release Date</a></th>
+          <th><a href="{{ route(Route::currentRouteName(), ['sort' => 'number_of_tracks', 'sortdirection' => 'number_of_tracks' === $sort ? $sortdirection : 'asc']) }}">Number of Tracks</a></th>
+          <th><a href="{{ route(Route::currentRouteName(), ['sort' => 'label', 'sortdirection' => 'label' === $sort ? $sortdirection : 'asc']) }}">Label</a></th>
+          <th><a href="{{ route(Route::currentRouteName(), ['sort' => 'producer', 'sortdirection' => 'producer' === $sort ? $sortdirection : 'asc']) }}">Producer</a></th>
+          <th><a href="{{ route(Route::currentRouteName(), ['sort' => 'genre', 'sortdirection' => 'genre' === $sort ? $sortdirection : 'asc']) }}">Genre</a></th>
         </tr>
       </thead>
       <tbody>
