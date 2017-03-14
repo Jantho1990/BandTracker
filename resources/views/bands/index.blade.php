@@ -16,10 +16,10 @@
     <table class='table'>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Start Date</th>
-          <th>Website</th>
-          <th>Still Active</th>
+          <th><a href="{{ route('bands.index', ['sort' => 'name', 'sortdirection' => 'name' === $sort ? $sortdirection : 'asc']) }}">Name</a></th>
+          <th><a href="{{ route('bands.index', ['sort' => 'start_date', 'sortdirection' => 'start_date' === $sort ? $sortdirection : 'asc']) }}">Start Date</a></th>
+          <th><a href="{{ route('bands.index', ['sort' => 'website', 'sortdirection' => 'website' === $sort ? $sortdirection : 'asc']) }}">Website</a></th>
+          <th><a href="{{ route('bands.index', ['sort' => 'still_active', 'sortdirection' => 'name' === $sort ? $sortdirection : 'asc']) }}">Still Active</a></th>
           <th></th>
           <th></th>
           <th></th>
