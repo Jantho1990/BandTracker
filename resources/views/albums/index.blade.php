@@ -12,7 +12,7 @@
   </div>
 </div>
 <div class="row data">
-  <div class="col-md-8 col-md-offset-2">
+  <div class="col-md-8 col-md-offset-2 table-responsive">
     <table class='table'>
       <thead>
         <tr>
@@ -28,7 +28,9 @@
       <tbody>
         @foreach($albums as $album)
             <tr>
-              <td>{{ $album->name }}</td>
+              <td>
+                <a target="_blank" href="/bands/{{ $band->id }}/albums/{{ $album->id }}">{{ $album->name }}</a>
+              </td>
               <td>{{ $album->recorded_date }}</td>
               <td>{{ $album->release_date }}</td>
               <td>{{ $album->number_of_tracks }}</td>

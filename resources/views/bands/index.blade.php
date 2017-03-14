@@ -12,8 +12,8 @@
   </div>
 </div>
 <div class="row data">
-  <div class="col-md-8 col-md-offset-2">
-    <table id="table" class='table'>
+  <div class="col-md-8 col-md-offset-2 table-responsive">
+    <table class='table'>
       <thead>
         <tr>
           <th>Name</th>

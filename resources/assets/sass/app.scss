@@ -12,6 +12,7 @@
 $primary: #AF111C;
 $secondary: #202020;
 $text: #FFF;
+$textbackground: #333;
 
 html body {
   background-color: $secondary;
@@ -43,6 +44,19 @@ header#header #app-title {
 }
 .data .table tbody tr:nth-of-type(2n) {
   background-color: #404040;
+}
+
+/**
+ *  Lists
+ */
+.data {
+  dl {
+    background-color: $textbackground;
+    border: 1px solid $primary;
+    dt, dd {
+      padding: 0.5em 0;
+    }
+  }
 }
 
 /**
