@@ -32,6 +32,13 @@
       <div class="col-sm-3 col-sm-offset-1">
         <a class="btn btn-warning" href="/bands/{{ $band->id }}/edit">Edit</a>
       </div>
+      <div class="col-sm-3 col-sm-offset-1">
+        <form class="" action="{{ route('bands.destroy', ['id' => $band->id]) }}" method="post">
+          {{ method_field('DELETE') }}
+          {{ csrf_field() }}
+          <button class="btn btn-danger" type="submit" name="button">Delete</button>
+        </form>
+      </div>
     </div>
   </div>
 </div>
