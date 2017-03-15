@@ -38,7 +38,7 @@ class AlbumController extends Controller
         $this->sort($albums, $sort, $sortdirection);
       }
 
-      return view('albums.index', ['albums' => $albums, 'sort' => $sort, 'sortdirection' => $sortdirection]);
+      return view('albums.index', ['albums' => $albums, 'band_id' => $request->band_id, 'sort' => $sort, 'sortdirection' => $sortdirection]);
     }
 
     /**
