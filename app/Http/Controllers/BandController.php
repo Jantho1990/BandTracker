@@ -49,7 +49,7 @@ class BandController extends Controller
       $this->validate($request, [
         'name' => 'required|unique:bands,name|max:255|string',
         'start_date' => '',
-        'website' => 'sometimes|url',
+        'website' => 'nullable|url',
         'still_active' => ''
       ]);
 
