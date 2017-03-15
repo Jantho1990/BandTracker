@@ -17,8 +17,13 @@ class AlbumController extends Controller
      */
     public function index(Request $request)
     {
-      //dd($request);
-      $albums = Album::all();
+      // If band_idis a parameter, get all albums by that
+      // band; otherwise return all.
+      if($request->band_id !== null){
+        $albums = Album::where('band_id', $request->band_id)->get();
+      }else{
+        $albums = Album::all();
+      }
 
       // Add band names as part of the album collection, so
       // we can sort by that column.
