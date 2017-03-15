@@ -48,9 +48,9 @@ class BandController extends Controller
       // Validate the data
       $this->validate($request, [
         'name' => 'required|unique:bands,name|max:255|string',
-        'start_date' => '',
+        'start_date' => 'nullable|string',
         'website' => 'nullable|url',
-        'still_active' => ''
+        'still_active' => 'nullable|boolean'
       ]);
 
       // Extract and store data
