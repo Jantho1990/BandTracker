@@ -13,6 +13,17 @@
 </div>
 <div class="row data">
   <div class="col-md-8 col-md-offset-2 table-responsive">
+    <form id="bandselectform" class="" action="{{ route('albums.index') }}" method="get">
+      {{ csrf_field() }}
+      <div class="form-group">
+        <label for="bandselect">Filter by Band</label>
+        <select class="form-control" name="band_id" onchange="document.querySelector('#bandselectform').submit();">
+          @foreach($bands as $band)
+            <option value="{{ $band->id }}" {{ $band->id === (int)$band_id ? 'selected' : '' }}>{{ $band->name }}</option>
+          @endforeach
+        </select>
+      </div>
+    </form>
     <table class='table'>
       <thead>
         <tr>
