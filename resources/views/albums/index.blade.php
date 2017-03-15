@@ -24,6 +24,8 @@
           <th><a href="{{ route('albums.index', ['sort' => 'label', 'sortdirection' => 'label' === $sort ? $sortdirection : 'asc']) }}">Label</a></th>
           <th><a href="{{ route('albums.index', ['sort' => 'producer', 'sortdirection' => 'producer' === $sort ? $sortdirection : 'asc']) }}">Producer</a></th>
           <th><a href="{{ route('albums.index', ['sort' => 'genre', 'sortdirection' => 'genre' === $sort ? $sortdirection : 'asc']) }}">Genre</a></th>
+          <th></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -41,6 +43,10 @@
               <td>{{ $album->label }}</td>
               <td>{{ $album->producer }}</td>
               <td>{{ $album->genre }}</td>
+              <td><a class="btn btn-warning" href="/albums/{{ $album->id }}/edit">Edit</a></td>
+              <td>
+                <a class="btn btn-danger" href="#">Delete</a>
+              </td>
             </tr>
         @endforeach
       </tbody>
