@@ -63,10 +63,10 @@ class AlbumController extends Controller
     {
       // Validate the data
       $this->validate($request, [
-        'band_id' => 'required|unique:bands,id|integer',
-        'name' => 'required|max:255|alpha_dash',
-        'recorded_date' => 'sometimes|date',
-        'release_date' => 'sometimes|date',
+        'band_id' => 'required|exists:bands,id|integer',
+        'name' => 'required|max:255|string',
+        'recorded_date' => 'sometimes|string',
+        'release_date' => 'sometimes|string',
         'number_of_tracks' => 'sometimes|integer',
         'label' => 'sometimes|max:255',
         'producer' => 'sometimes|max:255',
