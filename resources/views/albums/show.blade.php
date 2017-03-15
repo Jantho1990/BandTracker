@@ -6,10 +6,8 @@
 
 <div class="row title-line">
   <div class="col-sm-8 col-sm-offset-2">
-    <h1>
-      <p>{{ $album->name }}</p>
-      <p>by {{ $album->band->name }}</p>
-    </h1>
+    <h1>{{ $album->name }}</h1>
+    <h2>by {{ $album->band->name }}</h2>
   </div>
 </div>
 <div class="row data">
@@ -36,10 +34,10 @@
     </div>
     <div class="row">
       <div class="col-sm-3">
-        <a class="btn btn-info" href="/bands/{{ $album->band->id }}/albums">Back</a>
+        <a class="btn btn-info" href="{{ URL::previous() }}">Back</a>
       </div>
       <div class="col-sm-3 col-sm-offset-1">
-        <a class="btn btn-warning" href="/bands/{{ $album->band->id }}/albums/{{ $album->id }}/edit">Edit</a>
+        <a class="btn btn-warning" href="/albums/{{ $album->id }}/edit">Edit</a>
       </div>
     </div>
   </div>

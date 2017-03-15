@@ -6,6 +6,7 @@
   </head>
   <body>
     @include('partials._header')
+    @include('partials._message')
     <main class="container-fluid">
       @yield('content')
     </main>

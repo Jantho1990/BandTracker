@@ -27,7 +27,7 @@
     </div>
     <div class="row">
       <div class="col-sm-3">
-        <a class="btn btn-info" href="/">Back</a>
+        <a class="btn btn-info" href="{{ URL::previous() }}">Back</a>
       </div>
       <div class="col-sm-3 col-sm-offset-1">
         <a class="btn btn-warning" href="/bands/{{ $band->id }}/edit">Edit</a>

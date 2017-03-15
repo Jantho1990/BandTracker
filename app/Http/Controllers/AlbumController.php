@@ -48,9 +48,7 @@ class AlbumController extends Controller
      */
     public function create(Request $request)
     {
-        if($request->band_id !== null){
-          $band_id = $request->band_id;
-        }
+        $band_id = $request->band_id; // This is null if no band_id present.
         $bands = Band::all();
         return view('albums.create', ['band_id' => $band_id, 'bands' => $bands]);
     }
@@ -72,7 +70,7 @@ class AlbumController extends Controller
         'number_of_tracks' => 'sometimes|integer',
         'label' => 'sometimes|max:255',
         'producer' => 'sometimes|max:255',
-        'genre' => 'sometimes|genre'
+        'genre' => 'sometimes|max:255'
       ]);
 
       // Extract and store data
@@ -91,7 +89,7 @@ class AlbumController extends Controller
       Session::flash('success', "The album $album->name was successfully saved!");
 
       // Return show route
-      return redirect()->route('albums.show', ['album' => $album]);
+      return redirect()->route('albums.show', ['id' => $album->id]);
     }
 
     /**

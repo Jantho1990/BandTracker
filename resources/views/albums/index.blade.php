@@ -8,7 +8,7 @@
     <h1>Albums</h1>
   </div>
   <div class="col-sm-2 col-sm-offset-2 col-md-2 col-md-offset-0">
-    <a class="btn btn-success btn-headline" href="/bands/albums/create">Add New Album</a>
+    <a class="btn btn-success btn-headline" href="/albums/create">Add New Album</a>
   </div>
 </div>
 <div class="row data">
