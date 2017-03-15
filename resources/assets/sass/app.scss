@@ -1,0 +1,73 @@
+
+// Fonts
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+// Custom
+$primary: #AF111C;
+$secondary: #202020;
+$text: #FFF;
+$textbackground: #333;
+
+html body {
+  background-color: $secondary;
+  color: $text;
+}
+header#header {
+  background-color: $primary;
+  color: $text;
+  margin-bottom: 1em;
+}
+header#header #app-title {
+  font-size: 2em;
+  padding: 0.5em 0;
+}
+.btn-header {
+  margin-left: 2em;
+}
+.btn-headline {
+  margin-top: 1.75em;
+}
+.title-line {
+  margin-bottom: 2em;
+}
+.data .table thead tr {
+  background-color: #110000;
+}
+.data .table tbody tr:nth-of-type(2n + 1) {
+  background-color: #333;
+}
+.data .table tbody tr:nth-of-type(2n) {
+  background-color: #404040;
+}
+
+/**
+ *  Lists
+ */
+.data {
+  dl {
+    background-color: $textbackground;
+    border: 1px solid $primary;
+    dt, dd {
+      padding: 0.5em 0;
+    }
+  }
+}
+
+/**
+ *  Forms
+ */
+.form button {
+  // color: #202020;
+}
+
+@media screen and (max-width: 767px){
+  .title-line {
+    text-align: center;
+  }
+}
