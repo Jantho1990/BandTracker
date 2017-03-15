@@ -46,8 +46,11 @@ class AlbumController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($band_id = 0)
+    public function create(Request $request)
     {
+        if($request->band_id !== null){
+          $band_id = $request->band_id;
+        }
         $bands = Band::all();
         return view('albums.create', ['band_id' => $band_id, 'bands' => $bands]);
     }
@@ -97,7 +100,7 @@ class AlbumController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($band_id, $id)
+    public function show($id)
     {
         $album = Album::find($id);
         return view('albums.show', ['album' => $album]);
