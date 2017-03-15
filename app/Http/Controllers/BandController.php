@@ -106,7 +106,7 @@ class BandController extends Controller
       $band = Band::find($id);
       if($band->name === $request->name){
         $this->validate($request, [
-          'start_date' => 'sometimes|date',
+          'start_date' => 'sometimes|string',
           'website' => '',
           'still_active' => 'sometimes|boolean'
         ]);
