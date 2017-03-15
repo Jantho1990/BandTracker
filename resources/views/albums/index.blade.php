@@ -45,7 +45,11 @@
               <td>{{ $album->genre }}</td>
               <td><a class="btn btn-warning" href="/albums/{{ $album->id }}/edit">Edit</a></td>
               <td>
-                <a class="btn btn-danger" href="#">Delete</a>
+                <form class="" action="{{ route('albums.destroy', ['id' => $album->id]) }}" method="post">
+                  {{ method_field('DELETE') }}
+                  {{ csrf_field() }}
+                  <button class="btn btn-danger" type="submit" name="button">Delete</button>
+                </form>
               </td>
             </tr>
         @endforeach

@@ -65,12 +65,12 @@ class AlbumController extends Controller
       $this->validate($request, [
         'band_id' => 'required|exists:bands,id|integer',
         'name' => 'required|max:255|string',
-        'recorded_date' => 'sometimes|string',
-        'release_date' => 'sometimes|string',
-        'number_of_tracks' => 'sometimes|integer',
-        'label' => 'sometimes|max:255',
-        'producer' => 'sometimes|max:255',
-        'genre' => 'sometimes|max:255'
+        'recorded_date' => 'nullable|string',
+        'release_date' => 'nullable|string',
+        'number_of_tracks' => 'nullable|integer',
+        'label' => 'nullable|max:255',
+        'producer' => 'nullable|max:255',
+        'genre' => 'nullable|max:255'
       ]);
 
       // Extract and store data
@@ -131,23 +131,23 @@ class AlbumController extends Controller
       if($album->name === $request->name){
         $this->validate($request, [
           'band_id' => 'required|exists:bands,id|integer',
-          'recorded_date' => 'sometimes|string',
-          'release_date' => 'sometimes|string',
-          'number_of_tracks' => 'sometimes|integer',
-          'label' => 'sometimes|max:255',
-          'producer' => 'sometimes|max:255',
-          'genre' => 'sometimes|string'
+          'recorded_date' => 'nullable|string',
+          'release_date' => 'nullable|string',
+          'number_of_tracks' => 'nullable|integer',
+          'label' => 'nullable|max:255',
+          'producer' => 'nullable|max:255',
+          'genre' => 'nullable|string'
         ]);
       }else{
         $this->validate($request, [
           'band_id' => 'required|unique:bands,id|integer',
           'name' => 'required|max:255|alpha_dash',
-          'recorded_date' => 'sometimes|string',
-          'release_date' => 'sometimes|string',
-          'number_of_tracks' => 'sometimes|integer',
-          'label' => 'sometimes|max:255',
-          'producer' => 'sometimes|max:255',
-          'genre' => 'sometimes|string'
+          'recorded_date' => 'nullable|string',
+          'release_date' => 'nullable|string',
+          'number_of_tracks' => 'nullable|integer',
+          'label' => 'nullable|max:255',
+          'producer' => 'nullable|max:255',
+          'genre' => 'nullable|string'
         ]);
       }
 
@@ -180,7 +180,7 @@ class AlbumController extends Controller
     {
       $album = Album::find($id);
       $album->delete();
-      Flash::session('success', "$album->name was successfully deleted.");
+      Session::flash('success', "$album->name was successfully deleted.");
       return redirect()->route('albums.index');
     }
 }
