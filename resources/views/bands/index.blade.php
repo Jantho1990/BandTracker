@@ -7,7 +7,7 @@
   <div class="col-sm-8 col-md-6 col-md-offset-2">
     <h1>All Bands</h1>
   </div>
-  <div class="col-sm-2 col-sm-offset-2 col-md-2 col-md-offset-0">
+  <div class="col-sm-2 col-sm-offset-1 col-md-2 col-md-offset-0">
     <a class="btn btn-success btn-headline" href="/bands/create">Add New Band</a>
   </div>
 </div>
