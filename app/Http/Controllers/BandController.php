@@ -18,10 +18,12 @@ class BandController extends Controller
     {
         $bands = Band::all();
         // Apply sorting, if necessary.
-        $sort = $request->input('sort');
-        $sortdirection = $request->sortdirection === 'asc' ? 'desc' : 'asc';
         if($request->input('sort') !== ''){
+          $sort = $request->input('sort');
+          $sortdirection = $request->sortdirection;
           $this->sort($bands, $sort, $sortdirection);
+          // This has to come afterward so that toggling works.
+          $sortdirection = $request->sortdirection === 'asc' ? 'desc' : 'asc';
         }
 
         return view('bands.index', ['bands' => $bands, 'sort' => $sort, 'sortdirection' => $sortdirection]);
@@ -111,8 +113,8 @@ class BandController extends Controller
         ]);
       }else{
         $this->validate($request, [
-          'name' => 'required|exists:albums,name|max:255|alpha_dash',
-          'start_date' => 'nullable|date',
+          'name' => 'required|max:255|alpha_dash',
+          'start_date' => 'nullable|string',
           'website' => 'nullable|url',
           'still_active' => 'boolean'
         ]);

@@ -34,8 +34,10 @@ class AlbumController extends Controller
       // Apply sorting, if necessary.
       if($request->input('sort') !== ''){
         $sort = $request->input('sort');
-        $sortdirection = $request->sortdirection === 'asc' ? 'desc' : 'asc';
+        $sortdirection = $request->sortdirection;
         $this->sort($albums, $sort, $sortdirection);
+        // This has to come afterward so that toggling works.
+        $sortdirection = $request->sortdirection === 'asc' ? 'desc' : 'asc';
       }
 
       // Get all bands, so we can populate the filter select.
