@@ -47,12 +47,11 @@ class BandController extends Controller
     {
       // Validate the data
       $this->validate($request, [
-        'name' => 'required|unique:bands,name|max:255|alpha_dash',
+        'name' => 'required|unique:bands,name|max:255|string',
         'start_date' => '',
-        'website' => '',
+        'website' => 'sometimes|url',
         'still_active' => ''
       ]);
-      //dd($request);
 
       // Extract and store data
       $band = new Band();
