@@ -22,6 +22,12 @@
           </dd>
           <dt>Still Active:</dt>
           <dd>{{ $band->still_active ? 'True' : 'False' }}</dd>
+          <dt>Albums:</dt>
+          <dd>
+            @foreach($band->albums as $album)
+              <p><a href="/albums/{{ $album->id }}">{{ $album->name }}</a></p>
+            @endforeach
+          </dd>
         </dl>
       </div>
     </div>

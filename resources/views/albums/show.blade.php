@@ -7,7 +7,7 @@
 <div class="row title-line">
   <div class="col-sm-8 col-sm-offset-2">
     <h1>{{ $album->name }}</h1>
-    <h2>by {{ $album->band->name }}</h2>
+    <h2>by <a href="/bands/{{ $album->band->id }}">{{ $album->band->name }}</a></h2>
   </div>
 </div>
 <div class="row data">
