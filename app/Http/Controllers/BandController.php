@@ -18,16 +18,12 @@ class BandController extends Controller
     {
         $bands = Band::all();
         // Apply sorting, if necessary.
-        $sort = null;
+        $sort = $request->input('sort');
+        $sortdirection = $request->sortdirection === 'asc' ? 'desc' : 'asc';
         if($request->input('sort') !== ''){
-          $this->sort(
-            $bands,
-            $request->input('sort'),
-            $request->input('sortdirection')
-          );
-          $sort = $request->input('sort');
-          $sortdirection = $request->sortdirection === 'asc' ? 'desc' : 'asc';
+          $this->sort($bands, $sort, $sortdirection);
         }
+        
         return view('bands.index', ['bands' => $bands, 'sort' => $sort, 'sortdirection' => $sortdirection]);
     }
 

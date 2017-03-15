@@ -15,51 +15,25 @@ class AlbumController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, Band $band = null)
+    public function index(Request $request)
     {
       //dd($request);
-      if($band !== null && $band->exists){
-        $albums = Album::where('band_id', $band->id)->get();
-      }else{
-        $albums = Album::all();
-        $band = null;
+      $albums = Album::all();
+
+      // Add band names as part of the album collection, so
+      // we can sort by that column.
+      foreach($albums as $album){
+        $album->band_name = $album->band->name;
       }
+
       // Apply sorting, if necessary.
       if($request->input('sort') !== ''){
         $sort = $request->input('sort');
         $sortdirection = $request->sortdirection === 'asc' ? 'desc' : 'asc';
-        // Special case for band name.
-        if($sort === 'band'){
-          // We only need to sort if band is null, as otherwise
-          // there is only one band.
-          if($band === null){
-            $_albums = [];
-            foreach($albums as $album){
-              if(!isset($_albums[$album->band->name])){
-                $_albums[$album->band->name] = [];
-              }
-              array_push($_albums[$album->band->name], $album);
-            }
-            ksort($_albums);
-            //dd($_albums);
-            $ct = 0;
-            foreach($_albums as $_a=>$_album){
-              foreach($_album as $a=>$album){
-                echo($album->name . "\n");
-                $albums->shift();
-                $albums->put($ct++, $album);
-                echo $ct . "\n";
-              }
-            }
-            $albums->all();
-            //dd($albums);
-          }
-        }
         $this->sort($albums, $sort, $sortdirection);
-
       }
-      //dd($request);
-      return view('albums.index', ['albums' => $albums, 'band' => $band, 'sort' => $sort, 'sortdirection' => $sortdirection]);
+
+      return view('albums.index', ['albums' => $albums, 'sort' => $sort, 'sortdirection' => $sortdirection]);
     }
 
     /**

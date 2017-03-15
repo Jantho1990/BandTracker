@@ -13,15 +13,5 @@
 
 Route::get('/', 'BandController@index');
 
-Route::get('albums', 'AlbumController@index')->name('albums.all');
-Route::get('albums/create', 'AlbumController@create');
-Route::post('albums', 'AlbumController@store');
-Route::delete('albums/{id}', 'AlbumController@delete');
-Route::resource('bands/{band?}/albums', 'AlbumController', [
-  'except' => ['store', 'update', 'delete']
-]);
-
-// Albums
-//Route::get('bands/{band_id?}/albums')->name('albums.index');
-
+Route::resource('albums', 'AlbumController');
 Route::resource('bands', 'BandController');
