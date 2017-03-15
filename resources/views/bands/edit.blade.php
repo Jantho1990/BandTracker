@@ -14,8 +14,9 @@
 </div>
 <div class="row data">
   <div class="col-md-8 col-md-offset-2">
-    <form class="form" action="/bands" method="post">
+    <form class="form" action="/bands" method="put">
       {{ csrf_field() }}
+      {{ method_field('PUT') }}
       <div class="form-group">
         <label for="name">Band Name:</label>
         <input class="form-control" type="text" name="name" value="{{ $band->name }}">

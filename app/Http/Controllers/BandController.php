@@ -23,7 +23,7 @@ class BandController extends Controller
         if($request->input('sort') !== ''){
           $this->sort($bands, $sort, $sortdirection);
         }
-        
+
         return view('bands.index', ['bands' => $bands, 'sort' => $sort, 'sortdirection' => $sortdirection]);
     }
 
@@ -103,12 +103,21 @@ class BandController extends Controller
     public function update(Request $request, $id)
     {
       // Validate the data
-      $this->validate($request, [
-        'name' => 'required|max:255|alpha_dash',
-        'start_date' => 'sometimes|date',
-        'website' => '',
-        'still_active' => 'sometimes|boolean'
-      ]);
+      $band = Band::find($id);
+      if($band->name === $request->name){
+        $this->validate($request, [
+          'start_date' => 'sometimes|date',
+          'website' => '',
+          'still_active' => 'sometimes|boolean'
+        ]);
+      }else{
+        $this->validate($request, [
+          'name' => 'required|exists:albums,name|max:255|alpha_dash',
+          'start_date' => 'sometimes|date',
+          'website' => '',
+          'still_active' => 'sometimes|boolean'
+        ]);
+      }
 
       // Extract and store data
       $band = Band::find($id);
