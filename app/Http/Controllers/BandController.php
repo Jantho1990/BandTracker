@@ -50,7 +50,7 @@ class BandController extends Controller
         'name' => 'required|unique:bands,name|max:255|string',
         'start_date' => 'nullable|string',
         'website' => 'nullable|url',
-        'still_active' => 'nullable|boolean'
+        'still_active' => 'boolean'
       ]);
 
       // Extract and store data
@@ -112,9 +112,9 @@ class BandController extends Controller
       }else{
         $this->validate($request, [
           'name' => 'required|exists:albums,name|max:255|alpha_dash',
-          'start_date' => 'sometimes|date',
-          'website' => '',
-          'still_active' => 'sometimes|boolean'
+          'start_date' => 'nullable|date',
+          'website' => 'nullable|url',
+          'still_active' => 'boolean'
         ]);
       }
 
