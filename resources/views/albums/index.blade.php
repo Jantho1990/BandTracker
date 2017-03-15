@@ -18,6 +18,7 @@
       <div class="form-group">
         <label for="bandselect">Filter by Band</label>
         <select class="form-control" name="band_id" onchange="document.querySelector('#bandselectform').submit();">
+          <option value="">(View All)</option>
           @foreach($bands as $band)
             <option value="{{ $band->id }}" {{ $band->id === (int)$band_id ? 'selected' : '' }}>{{ $band->name }}</option>
           @endforeach
