@@ -53,7 +53,8 @@
         <input class="form-control" type="text" name="genre" value="">
       </div>
 
-      <button type="submit" name="button">Submit</button>
+      <a class="btn btn-danger" href="{{ URL::previous() }}">Back</a>
+      <button class="btn btn-success" type="submit" name="button">Save</button>
     </form>
   </div>
 </div>
