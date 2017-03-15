@@ -127,16 +127,29 @@ class AlbumController extends Controller
     public function update(Request $request, $id)
     {
       // Validate the data
-      $this->validate($request, [
-        'band_id' => 'required|unique:bands,id|integer',
-        'name' => 'required|max:255|alpha_dash',
-        'recorded_date' => 'sometimes|date',
-        'release_date' => 'sometimes|date',
-        'number_of_tracks' => 'sometimes|integer',
-        'label' => 'sometimes|max:255',
-        'producer' => 'sometimes|max:255',
-        'genre' => 'sometimes|genre'
-      ]);
+      $album = Album::find($id);
+      if($album->name === $request->name){
+        $this->validate($request, [
+          'band_id' => 'required|exists:bands,id|integer',
+          'recorded_date' => 'sometimes|string',
+          'release_date' => 'sometimes|string',
+          'number_of_tracks' => 'sometimes|integer',
+          'label' => 'sometimes|max:255',
+          'producer' => 'sometimes|max:255',
+          'genre' => 'sometimes|string'
+        ]);
+      }else{
+        $this->validate($request, [
+          'band_id' => 'required|unique:bands,id|integer',
+          'name' => 'required|max:255|alpha_dash',
+          'recorded_date' => 'sometimes|string',
+          'release_date' => 'sometimes|string',
+          'number_of_tracks' => 'sometimes|integer',
+          'label' => 'sometimes|max:255',
+          'producer' => 'sometimes|max:255',
+          'genre' => 'sometimes|string'
+        ]);
+      }
 
       // Extract and store data
       $album = Album::find($id);
