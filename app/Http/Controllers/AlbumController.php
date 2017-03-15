@@ -145,8 +145,8 @@ class AlbumController extends Controller
         ]);
       }else{
         $this->validate($request, [
-          'band_id' => 'required|unique:bands,id|integer',
-          'name' => 'required|max:255|alpha_dash',
+          'band_id' => 'required|exists:bands,id|integer',
+          'name' => 'required|max:255|string',
           'recorded_date' => 'nullable|string',
           'release_date' => 'nullable|string',
           'number_of_tracks' => 'nullable|integer',
