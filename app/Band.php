@@ -13,6 +13,6 @@ class Band extends Model
 
   public function getStillActiveStringAttribute()
   {
-    return ucfirst($this->still_active);
+    return $this->still_active ? 'True' : 'False';
   }
 }
