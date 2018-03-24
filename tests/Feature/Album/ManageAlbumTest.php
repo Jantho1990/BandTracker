@@ -18,44 +18,6 @@ class ManageAlbumTest extends TestCase
         parent::setUp();
         $this->band = factory(Band::class)->create();
     }
-    
-    /**
-     * @test
-     *
-     * @return void
-     */
-    public function canViewAlbumTitleFromBandView()
-    {
-        $album = factory(Album::class)->create([
-            'band_id' => $this->band->id
-        ]);
-
-        // visit the page
-        $response = $this->get("/bands/".$this->band->id);
-
-        // assert we can see the data
-        $response->assertSeeInOrder(['Albums:', $album->name]);
-    }
-
-    /**
-     * @test
-     * 
-     * @return void
-     */
-    public function cannotCreateAlbumWithNoBand()
-    {
-        $album = factory(Album::class)->create([
-            'band_id' => 2
-        ]);
-        $postData = $album->toArray();
-
-        // Send a post request to create a new album
-        $response = $this->post('/albums', $postData);
-        $response->assertStatus(302);
-
-        // Assert we got an error about not having a band.
-        $response->assertSessionHasErrors(['band_id']);
-    }
 
     /**
      * @test
@@ -157,5 +119,60 @@ class ManageAlbumTest extends TestCase
 
         // Assert the album is no longer in the DB
         $this->assertDatabaseMissing('albums', ['id' => $album->id, 'name' => $album->name]);
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function canViewAlbumTitleFromBandView()
+    {
+        $album = factory(Album::class)->create([
+            'band_id' => $this->band->id
+        ]);
+
+        // visit the page
+        $response = $this->get("/bands/" . $this->band->id);
+
+        // assert we can see the data
+        $response->assertSeeInOrder(['Albums:', $album->name]);
+    }
+
+    /**
+     * @test
+     * 
+     * @return void
+     */
+    public function cannotCreateAlbumWithNoBand()
+    {
+        $album = factory(Album::class)->create([
+            'band_id' => 2
+        ]);
+        $postData = $album->toArray();
+
+        // Send a post request to create a new album
+        $response = $this->post('/albums', $postData);
+        $response->assertStatus(302);
+
+        // Assert we got an error about not having a band.
+        $response->assertSessionHasErrors(['band_id']);
+    }
+
+    /**
+     * @test
+     * 
+     * @return void
+     */
+    public function destroyAlbumsWhenBandDeleted()
+    {
+        $album = factory(Album::class)->create();
+
+        // Send a delete request to the app
+        $response = $this->post("/bands/" . $this->band->id, ['_method' => 'DELETE']);
+
+        $response->assertStatus(302);
+
+        $this->assertDatabaseMissing('albums', ['id' => $album->id]);
     }
 }
