@@ -48,6 +48,9 @@ class ManageBandTest extends TestCase
         // dd($responsePost);
         $responsePost->assertStatus(302);
 
+        // Assert the band is in the DB
+        $this->assertDatabaseHas('bands', $band->toArray());
+
         // Asset the band was created by using a get request.
         $response = $this->get($responsePost->getTargetUrl());
         $response->assertSee($band->name);
@@ -71,6 +74,9 @@ class ManageBandTest extends TestCase
         $data = ['name' => 'The Worthless', 'start_date' => 'July 19, 2001', '_method' => 'PUT'];
         $responsePost = $this->post("/bands/$band->id", $data);
         $responsePost->assertStatus(302);
+
+        // Assert that our edits were saved in the DB
+        $this->assertDatabaseHas('bands', collect($data)->except('_method')->toArray());
 
         // Assert that our edits were saved
         $response = $this->get($responsePost->getTargetUrl());
