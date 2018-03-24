@@ -10,6 +10,14 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class ManageAlbumTest extends TestCase
 {
     use RefreshDatabase;
+
+    public $band;
+
+    public function setUp()
+    {
+        parent::setUp();
+        $this->band = factory(Band::class)->create();
+    }
     
     /**
      * @test
@@ -18,13 +26,12 @@ class ManageAlbumTest extends TestCase
      */
     public function canViewAlbumTitleFromBandView()
     {
-        $band = factory(Band::class)->create();
         $album = factory(Album::class)->create([
-            'band_id' => $band->id
+            'band_id' => $this->band->id
         ]);
 
         // visit the page
-        $response = $this->get("/bands/$band->id");
+        $response = $this->get("/bands/".$this->band->id);
 
         // assert we can see the data
         $response->assertSeeInOrder(['Albums:', $album->name]);
@@ -37,7 +44,6 @@ class ManageAlbumTest extends TestCase
      */
     public function canViewAlbum()
     {
-        $band = factory(Band::class)->create();
         $album = factory(Album::class)->create();
 
         // visit the page
@@ -61,7 +67,6 @@ class ManageAlbumTest extends TestCase
     public function canCreateAlbum()
     {
         // Create a album and get the data in an array so we can post it.
-        $band = factory(Band::class)->create();
         $album = factory(Album::class)->make();
         $postData = $album->toArray();
         
@@ -92,7 +97,6 @@ class ManageAlbumTest extends TestCase
     public function canEditAlbum()
     {
         // Store a album in the DB
-        $band = factory(Band::class)->create();        
         $album = factory(Album::class)->create();
 
         // Edit our album and put it
