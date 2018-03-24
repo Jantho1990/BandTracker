@@ -39,6 +39,26 @@ class ManageAlbumTest extends TestCase
 
     /**
      * @test
+     * 
+     * @return void
+     */
+    public function cannotCreateAlbumWithNoBand()
+    {
+        $album = factory(Album::class)->create([
+            'band_id' => 2
+        ]);
+        $postData = $album->toArray();
+
+        // Send a post request to create a new album
+        $response = $this->post('/albums', $postData);
+        $response->assertStatus(302);
+
+        // Assert we got an error about not having a band.
+        $response->assertSessionHasErrors(['band_id']);
+    }
+
+    /**
+     * @test
      *
      * @return void
      */
