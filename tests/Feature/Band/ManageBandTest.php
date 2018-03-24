@@ -77,4 +77,25 @@ class ManageBandTest extends TestCase
         $response->assertSee($data['name']);
         $response->assertSee($data['start_date']);
     }
+
+    /**
+     * @test
+     * 
+     * @return void
+     */
+    public function canDeleteBand()
+    {
+        // Store a band in the DB
+        $band = factory(Band::class)->create();
+
+        // Send a delete request to the app
+        $response = $this->post("/bands/$band->id", ['_method' => 'DELETE']);
+
+        // Assert we are redirected to the bands index
+        $response->assertStatus(302);
+        $response->assertRedirect('/bands');
+
+        // Assert the band is no longer in the DB
+        $this->assertDatabaseMissing('bands', ['id' => $band->id, 'name' => $band->name]);
+    }
 }
