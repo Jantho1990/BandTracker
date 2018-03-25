@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Album as Album;
-use App\Band as Band;
+use App\Album;
+use App\Band;
 use Session;
 
 class AlbumController extends Controller
@@ -17,33 +17,33 @@ class AlbumController extends Controller
      */
     public function index(Request $request)
     {
-      // If band_idis a parameter, get all albums by that
-      // band; otherwise return all.
-      if($request->band_id !== null){
-        $albums = Album::where('band_id', $request->band_id)->get();
-      }else{
-        $albums = Album::all();
-      }
+        // If band_idis a parameter, get all albums by that
+        // band; otherwise return all.
+        if ($request->band_id !== null) {
+            $albums = Album::where('band_id', $request->band_id)->get();
+        } else {
+            $albums = Album::all();
+        }
 
-      // Add band names as part of the album collection, so
-      // we can sort by that column.
-      foreach($albums as $album){
-        $album->band_name = $album->band->name;
-      }
+        // Add band names as part of the album collection, so
+        // we can sort by that column.
+        foreach ($albums as $album) {
+            $album->band_name = $album->band->name;
+        }
 
-      // Apply sorting, if necessary.
-      if($request->input('sort') !== ''){
-        $sort = $request->input('sort');
-        $sortdirection = $request->sortdirection;
-        $this->sort($albums, $sort, $sortdirection);
-        // This has to come afterward so that toggling works.
-        $sortdirection = $request->sortdirection === 'asc' ? 'desc' : 'asc';
-      }
+        // Apply sorting, if necessary.
+        if ($request->input('sort') !== '') {
+            $sort = $request->input('sort');
+            $sortdirection = $request->sortdirection;
+            $this->sort($albums, $sort, $sortdirection);
+            // This has to come afterward so that toggling works.
+            $sortdirection = $request->sortdirection === 'asc' ? 'desc' : 'asc';
+        }
 
-      // Get all bands, so we can populate the filter select.
-      $bands = Band::all();
+        // Get all bands, so we can populate the filter select.
+        $bands = Band::all();
 
-      return view('albums.index', ['albums' => $albums, 'bands' => $bands, 'band_id' => $request->band_id, 'sort' => $sort, 'sortdirection' => $sortdirection]);
+        return view('albums.index', ['albums' => $albums, 'bands' => $bands, 'band_id' => $request->band_id, 'sort' => $sort, 'sortdirection' => $sortdirection]);
     }
 
     /**
@@ -66,35 +66,35 @@ class AlbumController extends Controller
      */
     public function store(Request $request)
     {
-      // Validate the data
-      $this->validate($request, [
-        'band_id' => 'required|exists:bands,id|integer',
-        'name' => 'required|max:255|string',
-        'recorded_date' => 'nullable|string',
-        'release_date' => 'nullable|string',
-        'number_of_tracks' => 'nullable|integer',
-        'label' => 'nullable|max:255',
-        'producer' => 'nullable|max:255',
-        'genre' => 'nullable|max:255'
-      ]);
+        // Validate the data
+        $this->validate($request, [
+          'band_id' => 'required|exists:bands,id|integer',
+          'name' => 'required|max:255|string',
+          'recorded_date' => 'nullable|string',
+          'release_date' => 'nullable|string',
+          'number_of_tracks' => 'nullable|integer',
+          'label' => 'nullable|max:255',
+          'producer' => 'nullable|max:255',
+          'genre' => 'nullable|max:255'
+        ]);
 
-      // Extract and store data
-      $album = new Album();
-      $album->band_id = $request->band_id;
-      $album->name = $request->name;
-      $album->recorded_date = $request->recorded_date;
-      $album->release_date = $request->release_date;
-      $album->number_of_tracks = $request->number_of_tracks;
-      $album->label = $request->label;
-      $album->producer = $request->producer;
-      $album->genre = $request->genre;
-      $album->save();
+        // Extract and store data
+        $album = new Album();
+        $album->band_id = $request->band_id;
+        $album->name = $request->name;
+        $album->recorded_date = $request->recorded_date;
+        $album->release_date = $request->release_date;
+        $album->number_of_tracks = $request->number_of_tracks;
+        $album->label = $request->label;
+        $album->producer = $request->producer;
+        $album->genre = $request->genre;
+        $album->save();
 
-      // Flash message
-      Session::flash('success', "The album $album->name was successfully saved!");
+        // Flash message
+        Session::flash('success', "The album $album->name was successfully saved!");
 
-      // Return show route
-      return redirect()->route('albums.show', ['id' => $album->id]);
+        // Return show route
+        return redirect()->route('albums.show', ['id' => $album->id]);
     }
 
     /**
@@ -117,9 +117,9 @@ class AlbumController extends Controller
      */
     public function edit($id)
     {
-      $album = Album::find($id);
-      $bands = Band::all();
-      return view('albums.edit', ['album' => $album, 'bands' => $bands]);
+        $album = Album::find($id);
+        $bands = Band::all();
+        return view('albums.edit', ['album' => $album, 'bands' => $bands]);
     }
 
     /**
@@ -131,48 +131,48 @@ class AlbumController extends Controller
      */
     public function update(Request $request, $id)
     {
-      // Validate the data
-      $album = Album::find($id);
-      if($album->name === $request->name){
-        $this->validate($request, [
-          'band_id' => 'required|exists:bands,id|integer',
-          'recorded_date' => 'nullable|string',
-          'release_date' => 'nullable|string',
-          'number_of_tracks' => 'nullable|integer',
-          'label' => 'nullable|max:255',
-          'producer' => 'nullable|max:255',
-          'genre' => 'nullable|string'
-        ]);
-      }else{
-        $this->validate($request, [
-          'band_id' => 'required|exists:bands,id|integer',
-          'name' => 'required|max:255|string',
-          'recorded_date' => 'nullable|string',
-          'release_date' => 'nullable|string',
-          'number_of_tracks' => 'nullable|integer',
-          'label' => 'nullable|max:255',
-          'producer' => 'nullable|max:255',
-          'genre' => 'nullable|string'
-        ]);
-      }
+        // Validate the data
+        $album = Album::find($id);
+        if ($album->name === $request->name) {
+            $this->validate($request, [
+                'band_id' => 'required|exists:bands,id|integer',
+                'recorded_date' => 'nullable|string',
+                'release_date' => 'nullable|string',
+                'number_of_tracks' => 'nullable|integer',
+                'label' => 'nullable|max:255',
+                'producer' => 'nullable|max:255',
+                'genre' => 'nullable|string'
+            ]);
+        } else {
+            $this->validate($request, [
+                'band_id' => 'required|exists:bands,id|integer',
+                'name' => 'required|max:255|string',
+                'recorded_date' => 'nullable|string',
+                'release_date' => 'nullable|string',
+                'number_of_tracks' => 'nullable|integer',
+                'label' => 'nullable|max:255',
+                'producer' => 'nullable|max:255',
+                'genre' => 'nullable|string'
+            ]);
+        }
 
-      // Extract and store data
-      $album = Album::find($id);
-      $album->band_id = $request->band_id;
-      $album->name = $request->name;
-      $album->recorded_date = $request->recorded_date;
-      $album->release_date = $request->release_date;
-      $album->number_of_tracks = $request->number_of_tracks;
-      $album->label = $request->label;
-      $album->producer = $request->producer;
-      $album->genre = $request->genre;
-      $album->save();
+        // Extract and store data
+        $album = Album::find($id);
+        $album->band_id = $request->band_id;
+        $album->name = $request->name;
+        $album->recorded_date = $request->recorded_date;
+        $album->release_date = $request->release_date;
+        $album->number_of_tracks = $request->number_of_tracks;
+        $album->label = $request->label;
+        $album->producer = $request->producer;
+        $album->genre = $request->genre;
+        $album->save();
 
-      // Flash message
-      Session::flash('success', "The album $album->name was successfully saved!");
+        // Flash message
+        Session::flash('success', "The album $album->name was successfully saved!");
 
-      // Return show route
-      return redirect()->route('albums.show', ['album' => $album]);
+        // Return show route
+        return redirect()->route('albums.show', ['album' => $album]);
     }
 
     /**
@@ -183,9 +183,9 @@ class AlbumController extends Controller
      */
     public function destroy($id)
     {
-      $album = Album::find($id);
-      $album->delete();
-      Session::flash('success', "$album->name was successfully deleted.");
-      return redirect()->route('albums.index');
+        $album = Album::find($id);
+        $album->delete();
+        Session::flash('success', "$album->name was successfully deleted.");
+        return redirect()->route('albums.index');
     }
 }
