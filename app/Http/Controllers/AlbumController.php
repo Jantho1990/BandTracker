@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Album;
 use App\Band;
 use App\Http\Requests\AlbumRequest;
@@ -24,15 +23,22 @@ class AlbumController extends Controller
             ? Album::where('band_id', $band_id)->get()
             : Album::all();
 
-        // Apply sorting, if necessary.
+        // Apply sorting.
         $sort = $request->sort;
         $sortdirection = $request->sortdirection;
-        $albums = $sortdirection === 'asc'
-            ? $albums->sortBy($sort)
-            : $albums->sortByDesc($sort);
-
-        // This has to come afterward so that toggling works.
-        $sortdirection = $request->sortdirection === 'asc' ? 'desc' : 'asc';
+        switch ($sortdirection) {
+            case 'asc':
+                $albums = $albums->sortBy($sort);
+                $sortdirection = 'desc';
+                break;
+            case 'desc':
+                $albums = $albums->sortByDesc($sort);
+                $sortdirection = 'asc';
+                break;
+            default:
+                $albums = $albums->sortBy($sort);
+                $sortdirection = 'asc';
+        }
 
         // Get all bands, so we can populate the filter select.
         $bands = Band::all();
@@ -47,7 +53,7 @@ class AlbumController extends Controller
      */
     public function create(Request $request)
     {
-        $band_id = $request->band_id; // This is null if no band_id present.
+        $band_id = $request->band_id;
         
         $bands = Band::all();
         
