@@ -52,6 +52,9 @@ class CreateAlbumTest extends TestCase
         $response->assertSee($album->label);
         $response->assertSee($album->producer);
         $response->assertSee($album->genre);
+
+        // Verify we can see the flash message.
+        $response->assertSee(__('app.album.flash.saved'), ['name' => $album->name]);
     }
 
     /**

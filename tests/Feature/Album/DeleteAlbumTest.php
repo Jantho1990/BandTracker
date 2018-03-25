@@ -35,13 +35,17 @@ class DeleteAlbumTest extends TestCase
         $album = factory(Album::class)->create();
 
         // Send a delete request to the app
-        $response = $this->post("/albums/$album->id", ['_method' => 'DELETE']);
+        $responsePost = $this->post("/albums/$album->id", ['_method' => 'DELETE']);
 
         // Assert we are redirected to the albums index
-        $response->assertStatus(302);
-        $response->assertRedirect('/albums');
+        $responsePost->assertStatus(302);
+        $responsePost->assertRedirect('/albums');
 
         // Assert the album is no longer in the DB
         $this->assertDatabaseMissing('albums', ['id' => $album->id, 'name' => $album->name]);
+
+        // Verify we can see the flash message.
+        $response = $this->get($responsePost->getTargetUrl());
+        $response->assertSee(__('app.album.flash.deleted'), ['name' => $album->name]);
     }
 }

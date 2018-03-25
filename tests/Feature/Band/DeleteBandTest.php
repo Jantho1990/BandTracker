@@ -33,14 +33,18 @@ class DeleteBandTest extends TestCase
     {
 
         // Send a delete request to the app
-        $response = $this->post("/bands/".$this->band->id, ['_method' => 'DELETE']);
+        $responsePost = $this->post("/bands/".$this->band->id, ['_method' => 'DELETE']);
 
         // Assert we are redirected to the bands index
-        $response->assertStatus(302);
-        $response->assertRedirect('/bands');
+        $responsePost->assertStatus(302);
+        $responsePost->assertRedirect('/bands');
 
         // Assert the band is no longer in the DB
         $this->assertDatabaseMissing('bands', ['id' => $this->band->id, 'name' => $this->band->name]);
+
+        // Verify we can see the flash message.
+        $response = $this->get($responsePost->getTargetUrl());
+        $response->assertSee(__('app.band.flash.deleted'), ['name' => $this->band->name]);
     }
 
     /**

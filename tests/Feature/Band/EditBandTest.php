@@ -33,5 +33,8 @@ class EditBandTest extends TestCase
         $response = $this->get($responsePost->getTargetUrl());
         $response->assertSee($data['name']);
         $response->assertSee($data['start_date']);
+
+        // Verify we can see the flash message.
+        $response->assertSee(__('app.band.flash.updated'), ['name' => $band->name]);
     }
 }

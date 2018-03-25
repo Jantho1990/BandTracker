@@ -70,7 +70,7 @@ class AlbumController extends Controller
     {
         $album = Album::create($request->all());
 
-        session()->flash('success', "The album $album->name was successfully saved!");
+        session()->flash('success', __('app.album.flash.saved', [$album->name]));
 
         return redirect()->route('albums.show', compact('album'));
     }
@@ -113,7 +113,7 @@ class AlbumController extends Controller
     {
         $album->update($request->all());
 
-        session()->flash('success', "The album $album->name was successfully saved!");
+        session()->flash('success', __('app.album.flash.updated', [$album->name]));
 
         return redirect()->route('albums.show', compact('album'));
     }
@@ -128,7 +128,7 @@ class AlbumController extends Controller
     {
         $album->delete();
 
-        session()->flash('success', "$album->name was successfully deleted.");
+        session()->flash('success', __('app.album.flash.deleted', [$album->name]));
         
         return redirect()->route('albums.index');
     }
