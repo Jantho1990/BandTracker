@@ -7,18 +7,18 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Band;
 
-class BandTest extends TestCase
+class BandModelTest extends TestCase
 {
     /**
      * @test
      * 
      * @return void
      */
-    public function stillActiveStringReturnsStringTrue()
+    public function stillActiveStringReturnsStringYes()
     {
         $band = factory(Band::class)->make(['still_active' => true]);
 
-        $this->assertEquals($band->still_active_string, 'True');
+        $this->assertEquals($band->still_active_string, 'Yes');
     }
 
     /**
@@ -26,10 +26,10 @@ class BandTest extends TestCase
      * 
      * @return void
      */
-    public function stillActiveStringReturnsStringFalse()
+    public function stillActiveStringReturnsStringNo()
     {
         $band = factory(Band::class)->make(['still_active' => false]);
 
-        $this->assertEquals($band->still_active_string, 'False');
+        $this->assertEquals($band->still_active_string, 'No');
     }
 }

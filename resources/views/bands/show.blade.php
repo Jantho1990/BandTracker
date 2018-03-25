@@ -21,7 +21,7 @@
             <a target="_blank" href="{{ $band->website }}">{{ $band->website }}</a>
           </dd>
           <dt>Still Active:</dt>
-          <dd>{{ $band->still_active ? 'True' : 'False' }}</dd>
+          <dd>{{ $band->still_active_string }}</dd>
           <dt>Albums:</dt>
           <dd>
             @foreach($band->albums as $album)

@@ -15,6 +15,6 @@ class Band extends Model
 
   public function getStillActiveStringAttribute()
   {
-    return $this->still_active ? 'True' : 'False';
+    return $this->still_active ? 'Yes' : 'No';
   }
 }
