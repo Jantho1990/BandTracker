@@ -13,14 +13,13 @@ class Controller extends BaseController
 
     public function sort(&$collection, $sort_param, $sort_dir = null)
     {
-      switch($sort_dir){
-        case 'desc':
-          $collection = $collection->sortByDesc($sort_param);
-          break;
-        default:
-          //dd($albums);
-          $collection = $collection->sortBy($sort_param);
-      }
-      $collection->values()->all();
+        switch ($sort_dir) {
+            case 'desc':
+                $collection = $collection->sortByDesc($sort_param);
+                break;
+            default:
+                $collection = $collection->sortBy($sort_param);
+        }
+        $collection->values()->all();
     }
 }
