@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 use App\Album;
 use App\Band;
-use Session;
 use App\Http\Requests\AlbumRequest;
 
 class AlbumController extends Controller
@@ -64,7 +63,7 @@ class AlbumController extends Controller
     {
         $album = Album::create($request->all());
 
-        Session::flash('success', "The album $album->name was successfully saved!");
+        session()->flash('success', "The album $album->name was successfully saved!");
 
         return redirect()->route('albums.show', compact('album'));
     }
@@ -104,7 +103,7 @@ class AlbumController extends Controller
     {
         $album->update($request->all());
 
-        Session::flash('success', "The album $album->name was successfully saved!");
+        session()->flash('success', "The album $album->name was successfully saved!");
 
         return redirect()->route('albums.show', compact('album'));
     }
@@ -119,7 +118,7 @@ class AlbumController extends Controller
     {
         $album->delete();
 
-        Session::flash('success', "$album->name was successfully deleted.");
+        session()->flash('success', "$album->name was successfully deleted.");
         
         return redirect()->route('albums.index');
     }
