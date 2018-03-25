@@ -28,7 +28,7 @@
     <table class='table'>
       <thead>
         <tr>
-          <th><a href="{{ route('albums.index', ['sort' => 'band_name', 'sortdirection' => 'band_name' === $sort ? $sortdirection : 'asc']) }}">Band Name</a></th>
+          <th><a href="{{ route('albums.index', ['sort' => 'band.name', 'sortdirection' => 'band.name' === $sort ? $sortdirection : 'asc']) }}">Band Name</a></th>
           <th><a href="{{ route('albums.index', ['sort' => 'name', 'sortdirection' => 'name' === $sort ? $sortdirection : 'asc']) }}">Album Name</a></th>
           <th><a href="{{ route('albums.index', ['sort' => 'recorded_date', 'sortdirection' => 'recorded_date' === $sort ? $sortdirection : 'asc']) }}">Recorded Date</a></th>
           <th><a href="{{ route('albums.index', ['sort' => 'release_date', 'sortdirection' => 'release_date' === $sort ? $sortdirection : 'asc']) }}">Release Date</a></th>

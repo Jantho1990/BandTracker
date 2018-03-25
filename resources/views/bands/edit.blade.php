@@ -32,13 +32,13 @@
       <div class="form-group">
         <label for="still_active">Still Active:</label>
         <select class="form-control" name="still_active">
-          <option value="0" {{ $band->still_active ? '' : 'selected' }}>{{ __('band.still_active.false') }}</option>
-          <option value="1" {{ $band->still_active ? 'selected' : '' }}>{{ __('band.still_active.true') }}</option>
+          <option value="0" {{ $band->still_active ? '' : 'selected' }}>{{ __('app.band.still_active.false') }}</option>
+          <option value="1" {{ $band->still_active ? 'selected' : '' }}>{{ __('app.band.still_active.true') }}</option>
         </select>
       </div>
 
       <a class="btn btn-danger" href="{{ URL::previous() }}">Back</a>
-      <button class="btn btn-success" type="submit" name="button">Save</button>
+      <button class="btn btn-success" type="submit">Save</button>
     </form>
   </div>
 </div>

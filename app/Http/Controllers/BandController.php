@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Band as Band;
-use Session;
+use App\Band;
+use App\Http\Requests\BandRequest;
 
 class BandController extends Controller
 {
@@ -17,16 +17,25 @@ class BandController extends Controller
     public function index(Request $request)
     {
         $bands = Band::all();
-        // Apply sorting, if necessary.
-        if($request->input('sort') !== ''){
-          $sort = $request->input('sort');
-          $sortdirection = $request->sortdirection;
-          $this->sort($bands, $sort, $sortdirection);
-          // This has to come afterward so that toggling works.
-          $sortdirection = $request->sortdirection === 'asc' ? 'desc' : 'asc';
+
+        // Apply sorting.
+        $sort = $request->sort;
+        $sortdirection = $request->sortdirection;
+        switch ($sortdirection) {
+            case 'asc':
+                $bands = $bands->sortBy($sort);
+                $sortdirection = 'desc';
+                break;
+            case 'desc':
+                $bands = $bands->sortByDesc($sort);
+                $sortdirection = 'asc';
+                break;
+            default:
+                $bands = $bands->sortBy($sort);
+                $sortdirection = 'asc';
         }
 
-        return view('bands.index', ['bands' => $bands, 'sort' => $sort, 'sortdirection' => $sortdirection]);
+        return view('bands.index', compact('bands', 'sort', 'sortdirection'));
     }
 
     /**
@@ -42,106 +51,72 @@ class BandController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\BandRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BandRequest $request)
     {
-      // Validate the data
-      $this->validate($request, [
-        'name' => 'required|unique:bands,name|max:255|string',
-        'start_date' => 'nullable|string',
-        'website' => 'nullable|url',
-        'still_active' => 'boolean'
-      ]);
+        $band = Band::create($request->all());
 
-      // Extract and store data
-      $band = new Band();
-      $band->name = $request->name;
-      $band->start_date = $request->start_date;
-      $band->website = $request->website;
-      $band->still_active = (bool)$request->still_active;
-      $band->save();
+        session()->flash('success', __('app.band.flash.saved', ['name' => $band->name]));
 
-      // Flash message
-      Session::flash('success', "The band $band->name was successfully saved!");
-
-      // Return show route
-      return redirect()->route('bands.show', ['band' => $band]);
+        return redirect()->route('bands.show', compact('band'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  App\Band  $band
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Band $band)
     {
-        $band = Band::find($id);
-        return view('bands.show', ['band' => $band]);
+        return view('bands.show', compact('band'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  App\Band  $band
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Band $band)
     {
-        $band = Band::find($id);
-        return view('bands.edit', ['band' => $band]);
+        return view('bands.edit', compact('band'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  App\Http\Requests\BandRequest  $request
+     * @param  App\Band  $band
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Band $band)
+    public function update(BandRequest $request, Band $band)
     {
-      // Validate the data
-      if($band->name === $request->name){
-        $this->validate($request, [
-          'start_date' => 'sometimes|string',
-          'website' => '',
-          'still_active' => 'sometimes|boolean'
-        ]);
-      }else{
-        $this->validate($request, [
-          'name' => 'required|max:255|string',
-          'start_date' => 'nullable|string',
-          'website' => 'nullable|url',
-          'still_active' => 'boolean'
-        ]);
-      }
+        $band->update($request->all());
 
-      $band->update($request->all());
-
-      Session::flash('success', "The band $band->name was successfully updated!");
-      return redirect()->route('bands.show', ['band' => $band]);
+        session()->flash('success', __('app.band.flash.updated', ['name' => $band->name]));
+        
+        return redirect()->route('bands.show', ['band' => $band]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  App\Band  $band
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Band $band)
     {
-      $band = Band::find($id);
-      $albums = $band->albums;
-      if($albums->count() !== 0){
-        foreach($albums as $album){
-          $album->delete();
-        }
-      }
-      $band->delete();
-      Session::flash('success', "$band->name and their albums were successfully deleted.");
-      return redirect()->route('bands.index');
+        $band->load('albums');
+
+        \App\Album::destroy($band->albums->pluck('id')->all());
+
+        $band->delete();
+
+        session()->flash('success', __('app.band.flash.deleted', ['name' => $band->name]));
+        
+        return redirect()->route('bands.index');
     }
 }
