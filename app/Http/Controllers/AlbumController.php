@@ -21,7 +21,7 @@ class AlbumController extends Controller
         // band; otherwise return all.
         $band_id = $request->band_id;
         $albums = $band_id !== null
-            ? Album::where('band_id', $request->band_id)->get()
+            ? Album::where('band_id', $band_id)->get()
             : Album::all();
 
         // Apply sorting, if necessary.
