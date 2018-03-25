@@ -20,8 +20,8 @@ class AlbumController extends Controller
         // band; otherwise return all.
         $band_id = $request->band_id;
         $albums = $band_id !== null
-            ? Album::where('band_id', $band_id)->get()
-            : Album::all();
+            ? Album::with('band')->where('band_id', $band_id)->get()
+            : Album::with('band')->get();
 
         // Apply sorting.
         $sort = $request->sort;
@@ -40,8 +40,8 @@ class AlbumController extends Controller
                 $sortdirection = 'asc';
         }
 
-        // Get all bands, so we can populate the filter select.
-        $bands = Band::all();
+        // Get all band names, so we can populate the filter select.
+        $bands = Band::select('name')->get();
 
         return view('albums.index', compact('albums', 'bands', 'band_id', 'sort', 'sortdirection'));
     }
@@ -83,6 +83,8 @@ class AlbumController extends Controller
      */
     public function show(Album $album)
     {
+        $album->load('band');
+        
         return view('albums.show', compact('album'));
     }
 
@@ -94,6 +96,7 @@ class AlbumController extends Controller
      */
     public function edit(Album $album)
     {
+        $album->load('band');
         $bands = Band::all();
 
         return view('albums.edit', compact('album', 'bands'));
