@@ -5,7 +5,8 @@ namespace Tests\Feature\Band;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\{Album, Band};
+use App\Album;
+use App\Band;
 
 class ViewBandTest extends TestCase
 {
@@ -21,12 +22,11 @@ class ViewBandTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->band = factory(Band::class)->create();        
+        $this->band = factory(Band::class)->create();
     }
 
     /**
      * @test
-     *
      * @return void
      */
     public function canViewBand()
@@ -41,7 +41,6 @@ class ViewBandTest extends TestCase
 
     /**
      * @test
-     *
      * @return void
      */
     public function canViewAlbumTitleFromBandView()

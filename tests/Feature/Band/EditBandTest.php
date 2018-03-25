@@ -13,7 +13,6 @@ class EditBandTest extends TestCase
 
     /**
      * @test
-     * 
      * @return void
      */
     public function canEditBand()

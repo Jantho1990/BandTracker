@@ -5,7 +5,8 @@ namespace Tests\Feature\Band;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\{Album, Band};
+use App\Album;
+use App\Band;
 
 class DeleteBandTest extends TestCase
 {
@@ -26,7 +27,6 @@ class DeleteBandTest extends TestCase
 
     /**
      * @test
-     * 
      * @return void
      */
     public function canDeleteBand()
@@ -45,7 +45,6 @@ class DeleteBandTest extends TestCase
 
     /**
      * @test
-     * 
      * @return void
      */
     public function destroyAlbumsWhenBandDeleted()

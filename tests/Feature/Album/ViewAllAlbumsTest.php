@@ -17,6 +17,7 @@ class ViewAllAlbumsTest extends TestCase
 
     /**
      * Run before each test.
+     *
      * @return void
      */
     public function setUp()

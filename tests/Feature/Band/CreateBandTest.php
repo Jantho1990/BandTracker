@@ -13,7 +13,6 @@ class CreateBandTest extends TestCase
     
     /**
      * @test
-     * 
      * @return void
      */
     public function canCreateBand()
