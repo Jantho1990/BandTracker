@@ -24,7 +24,7 @@ class BandRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:bands,name|max:255|string',
+            'name' => 'required|max:255|string',
             'start_date' => 'nullable|string',
             'website' => 'nullable|url',
             'still_active' => 'boolean'
