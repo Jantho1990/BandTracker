@@ -5,7 +5,8 @@ namespace Tests\Feature\Album;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\{Album, Band};
+use App\Album;
+use App\Band;
 
 class CreateAlbumTest extends TestCase
 {
@@ -26,7 +27,6 @@ class CreateAlbumTest extends TestCase
 
     /**
      * @test
-     * 
      * @return void
      */
     public function canCreateAlbum()
@@ -52,11 +52,13 @@ class CreateAlbumTest extends TestCase
         $response->assertSee($album->label);
         $response->assertSee($album->producer);
         $response->assertSee($album->genre);
+
+        // Verify we can see the flash message.
+        $response->assertSee(__('app.album.flash.saved', ['name' => $album->name]));
     }
 
     /**
      * @test
-     * 
      * @return void
      */
     public function cannotCreateAlbumWithNoBand()

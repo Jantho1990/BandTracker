@@ -13,7 +13,6 @@ class CreateBandTest extends TestCase
     
     /**
      * @test
-     * 
      * @return void
      */
     public function canCreateBand()
@@ -36,5 +35,8 @@ class CreateBandTest extends TestCase
         $response->assertSee($band->start_date);
         $response->assertSee($band->website);
         $response->assertSeeInOrder(['Still Active:', $band->still_active_string]);
+
+        // Verify we can see the flash message.
+        $response->assertSee(__('app.band.flash.saved', ['name' => $band->name]));
     }
 }

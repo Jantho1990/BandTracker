@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Album extends Model
 {
-  public function band(){
-    return $this->belongsTo('App\Band', 'band_id');
-  }
+    protected $guarded = [];
+
+    public function band()
+    {
+        return $this->belongsTo('App\Band');
+    }
 }

@@ -11,7 +11,6 @@ class BandModelTest extends TestCase
 {
     /**
      * @test
-     * 
      * @return void
      */
     public function stillActiveStringReturnsStringYes()
@@ -23,7 +22,6 @@ class BandModelTest extends TestCase
 
     /**
      * @test
-     * 
      * @return void
      */
     public function stillActiveStringReturnsStringNo()

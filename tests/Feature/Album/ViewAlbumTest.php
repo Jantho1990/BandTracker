@@ -5,7 +5,8 @@ namespace Tests\Feature\Album;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\{Album, Band};
+use App\Album;
+use App\Band;
 
 class ViewAlbumTest extends TestCase
 {
@@ -21,7 +22,6 @@ class ViewAlbumTest extends TestCase
 
     /**
      * @test
-     *
      * @return void
      */
     public function canViewAlbum()
