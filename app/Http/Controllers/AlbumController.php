@@ -25,13 +25,14 @@ class AlbumController extends Controller
             : Album::all();
 
         // Apply sorting, if necessary.
-        if ($request->sort !== '') {
-            $sort = $request->sort;
-            $sortdirection = $request->sortdirection;
-            $this->sort($albums, $sort, $sortdirection);
-            // This has to come afterward so that toggling works.
-            $sortdirection = $request->sortdirection === 'asc' ? 'desc' : 'asc';
-        }
+        $sort = $request->sort;
+        $sortdirection = $request->sortdirection;
+        $albums = $sortdirection === 'asc'
+            ? $albums->sortBy($sort)
+            : $albums->sortByDesc($sort);
+
+        // This has to come afterward so that toggling works.
+        $sortdirection = $request->sortdirection === 'asc' ? 'desc' : 'asc';
 
         // Get all bands, so we can populate the filter select.
         $bands = Band::all();

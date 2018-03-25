@@ -79,10 +79,6 @@ class ViewAllAlbumsTest extends TestCase
     {
         $sortdirections = collect(['asc', 'desc']);
         
-        // Add the band name as an explicit attribute for this test.
-        $this->albums[0]->band_name = $this->albums[0]->band->name;
-        $this->albums[1]->band_name = $this->albums[1]->band->name;
-        
         $album = $this->albums[0]; // We just need this to grab the attributes.
         
         $sortdirections->each(function ($sortdirection) use ($album) {
