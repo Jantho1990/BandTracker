@@ -52,10 +52,8 @@ class ViewAllAlbumsTest extends TestCase
      */
     public function canViewAllAlbumsOnAlbumIndex()
     {
-        // Load the index page
         $response = $this->get('/albums');
 
-        // Assert we can see all the albums we created
         collect($this->albums)->each(function ($album) use ($response) {
             collect($album)->except([
                 'id',
@@ -69,6 +67,21 @@ class ViewAllAlbumsTest extends TestCase
             $response->assertSee((string)($album->number_of_tracks));
             $response->assertSeeInOrder(['Band Name', $album->band->name]);
         });
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function canViewAllAlbumsByBand()
+    {
+        $response = $this->get('/albums?band_id=1');
+
+        $this->bands[0]->albums->each(function ($album) use ($response) {
+            $response->assertSee($album->name);
+        });
+
+        $response->assertDontSee('<a href="/bands/'.$this->bands[1]->id.'">'.$this->bands[1]->name.'</a>');
     }
 
     /**
@@ -98,7 +111,6 @@ class ViewAllAlbumsTest extends TestCase
                             : ($sortdirection === 'asc' ? -1 : 1);
                     })->prepend($a)
                     ->toArray();
-                // dump("/albums?sort=$a&sortdirection=$sortdirection", $sortedAttributes);
                 $response->assertSeeInOrder($sortedAttributes);
             });
         });
