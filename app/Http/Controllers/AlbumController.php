@@ -41,7 +41,7 @@ class AlbumController extends Controller
         }
 
         // Get all band names, so we can populate the filter select.
-        $bands = Band::select('name')->get();
+        $bands = Band::select('name', 'id')->get();
 
         return view('albums.index', compact('albums', 'bands', 'band_id', 'sort', 'sortdirection'));
     }
