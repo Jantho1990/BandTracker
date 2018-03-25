@@ -37,6 +37,6 @@ class CreateBandTest extends TestCase
         $response->assertSeeInOrder(['Still Active:', $band->still_active_string]);
 
         // Verify we can see the flash message.
-        $response->assertSee(__('app.band.flash.saved'), ['name' => $band->name]);
+        $response->assertSee(__('app.band.flash.saved', ['name' => $band->name]));
     }
 }

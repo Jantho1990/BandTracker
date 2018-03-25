@@ -58,7 +58,7 @@ class BandController extends Controller
     {
         $band = Band::create($request->all());
 
-        session()->flash('success', __('app.band.flash.saved', [$band->name]));
+        session()->flash('success', __('app.band.flash.saved', ['name' => $band->name]));
 
         return redirect()->route('bands.show', compact('band'));
     }
@@ -96,7 +96,7 @@ class BandController extends Controller
     {
         $band->update($request->all());
 
-        session()->flash('success', __('app.band.flash.updated', [$band->name]));
+        session()->flash('success', __('app.band.flash.updated', ['name' => $band->name]));
         
         return redirect()->route('bands.show', ['band' => $band]);
     }
@@ -115,7 +115,7 @@ class BandController extends Controller
 
         $band->delete();
 
-        session()->flash('success', __('app.band.flash.deleted', [$band->name]));
+        session()->flash('success', __('app.band.flash.deleted', ['name' => $band->name]));
         
         return redirect()->route('bands.index');
     }

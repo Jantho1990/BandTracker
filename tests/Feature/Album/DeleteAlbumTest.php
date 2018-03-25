@@ -46,6 +46,6 @@ class DeleteAlbumTest extends TestCase
 
         // Verify we can see the flash message.
         $response = $this->get($responsePost->getTargetUrl());
-        $response->assertSee(__('app.album.flash.deleted'), ['name' => $album->name]);
+        $response->assertSee(__('app.album.flash.deleted', ['name' => $album->name]));
     }
 }

@@ -44,7 +44,7 @@ class DeleteBandTest extends TestCase
 
         // Verify we can see the flash message.
         $response = $this->get($responsePost->getTargetUrl());
-        $response->assertSee(__('app.band.flash.deleted'), ['name' => $this->band->name]);
+        $response->assertSee(__('app.band.flash.deleted', ['name' => $this->band->name]));
     }
 
     /**

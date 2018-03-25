@@ -37,7 +37,7 @@ class EditAlbumTest extends TestCase
         // Edit our album and put it
         $data = [
             'band_id' => 1,
-            'name' => 'The Worthless Filler Album',
+            'name' => 'The Worthless Album',
             'number_of_tracks' => 11,
             '_method' => 'PUT'
         ];
@@ -53,6 +53,6 @@ class EditAlbumTest extends TestCase
         $response->assertSee((string)$data['number_of_tracks']);
 
         // Verify we can see the flash message.
-        $response->assertSee(__('app.album.flash.updated'), ['name' => $album->name]);
+        $response->assertSee(__('app.album.flash.updated', ['name' => $data['name']]));
     }
 }

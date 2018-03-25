@@ -22,7 +22,12 @@ class EditBandTest extends TestCase
 
 
         // Edit our band and put it
-        $data = ['name' => 'The Worthless', 'start_date' => 'July 19, 2001', 'website' => null, '_method' => 'PUT'];
+        $data = [
+            'name' => 'The Worthless',
+            'start_date' => 'July 19, 2001',
+            'website' => null,
+            '_method' => 'PUT'
+        ];
         $responsePost = $this->post("/bands/$band->id", $data);
         $responsePost->assertStatus(302);
 
@@ -35,6 +40,6 @@ class EditBandTest extends TestCase
         $response->assertSee($data['start_date']);
 
         // Verify we can see the flash message.
-        $response->assertSee(__('app.band.flash.updated'), ['name' => $band->name]);
+        $response->assertSee(__('app.band.flash.updated', ['name' => $data['name']]));
     }
 }
