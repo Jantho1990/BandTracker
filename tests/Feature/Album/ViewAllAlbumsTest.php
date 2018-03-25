@@ -36,7 +36,7 @@ class ViewAllAlbumsTest extends TestCase
             factory(Album::class)->create([
                 'band_id' => 2,
                 'name' => 'LOLUSUK',
-                'recorded_date' => '2011',
+                'recorded_date' => null,
                 'release_date' => '2012',
                 'number_of_tracks' => 41,
                 'label' => 'Ugh Sounds',
@@ -54,6 +54,7 @@ class ViewAllAlbumsTest extends TestCase
     {
         $response = $this->get('/albums');
 
+        // Assert we can see all the albums we created
         collect($this->albums)->each(function ($album) use ($response) {
             collect($album)->except([
                 'id',
@@ -61,7 +62,9 @@ class ViewAllAlbumsTest extends TestCase
                 'number_of_tracks',
                 'created_at',
                 'updated_at'
-            ])->each(function ($attribute, $a) use ($response) {
+            ])->filter(function ($value) {
+                return $value !== null;
+            })->each(function ($attribute, $a) use ($response) {
                 $response->assertSee($attribute);
             });
             $response->assertSee((string)($album->number_of_tracks));
@@ -88,7 +91,7 @@ class ViewAllAlbumsTest extends TestCase
      * @test
      * @return void
      */
-    public function allAlbumsSortedAlphabetically()
+    public function allAlbumsSorted()
     {
         $sortdirections = collect(['asc', 'desc']);
         
@@ -105,7 +108,9 @@ class ViewAllAlbumsTest extends TestCase
                 $response->assertSuccessful();
                 $sortedAttributes = collect($this->albums)
                     ->pluck($a)
-                    ->sort(function ($a, $b) use ($sortdirection) {
+                    ->filter(function ($value) {
+                        return $value !== null;
+                    })->sort(function ($a, $b) use ($sortdirection) {
                         return ($a >= $b)
                             ? ($sortdirection === 'asc' ? 1 : -1)
                             : ($sortdirection === 'asc' ? -1 : 1);

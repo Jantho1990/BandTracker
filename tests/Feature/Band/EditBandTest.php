@@ -23,7 +23,7 @@ class EditBandTest extends TestCase
 
 
         // Edit our band and put it
-        $data = ['name' => 'The Worthless', 'start_date' => 'July 19, 2001', '_method' => 'PUT'];
+        $data = ['name' => 'The Worthless', 'start_date' => 'July 19, 2001', 'website' => null, '_method' => 'PUT'];
         $responsePost = $this->post("/bands/$band->id", $data);
         $responsePost->assertStatus(302);
 
