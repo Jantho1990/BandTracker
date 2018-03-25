@@ -101,10 +101,9 @@ class BandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Band $band)
     {
       // Validate the data
-      $band = Band::find($id);
       if($band->name === $request->name){
         $this->validate($request, [
           'start_date' => 'sometimes|string',
@@ -113,25 +112,16 @@ class BandController extends Controller
         ]);
       }else{
         $this->validate($request, [
-          'name' => 'required|max:255|alpha_dash',
+          'name' => 'required|max:255|string',
           'start_date' => 'nullable|string',
           'website' => 'nullable|url',
           'still_active' => 'boolean'
         ]);
       }
 
-      // Extract and store data
-      $band = Band::find($id);
-      $band->name = $request->name;
-      $band->start_date = $request->start_date;
-      $band->website = $request->website;
-      $band->still_active = $request->still_active;
-      $band->save();
+      $band->update($request->all());
 
-      // Flash message
-      Session::flash('success', "The band $band->name was successfully saved!");
-
-      // Return show route
+      Session::flash('success', "The band $band->name was successfully updated!");
       return redirect()->route('bands.show', ['band' => $band]);
     }
 

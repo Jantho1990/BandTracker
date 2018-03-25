@@ -34,7 +34,7 @@
             <td>
               <a target="_blank" href="{{ $band->website }}">{{ $band->website }}</a>
             </td>
-            <td>{{ $band->still_active ? 'Yes' : 'No' }}</td>
+            <td>{{ $band->still_active_string }}</td>
             <td><a class="btn btn-info" href="/albums?band_id={{ $band->id }}">View Albums</a></td>
             <td><a class="btn btn-warning" href="/bands/{{ $band->id }}/edit">Edit</a></td>
             <td>

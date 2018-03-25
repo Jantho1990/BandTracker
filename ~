@@ -1,0 +1,11 @@
+refactored set up to create a single this->band available to all album tests
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Date:      Sat Mar 24 14:12:16 2018 -0500
+#
+# On branch feature/add-unit-testing
+# Changes to be committed:
+#	modified:   tests/Feature/Album/ManageAlbumTest.php
+#

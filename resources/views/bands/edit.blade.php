@@ -32,8 +32,8 @@
       <div class="form-group">
         <label for="still_active">Still Active:</label>
         <select class="form-control" name="still_active">
-          <option value="0" {{ $band->still_active ? '' : 'selected' }}>False</option>
-          <option value="1" {{ $band->name ? 'selected' : '' }}>True</option>
+          <option value="0" {{ $band->still_active ? '' : 'selected' }}>{{ __('band.still_active.false') }}</option>
+          <option value="1" {{ $band->still_active ? 'selected' : '' }}>{{ __('band.still_active.true') }}</option>
         </select>
       </div>
 
