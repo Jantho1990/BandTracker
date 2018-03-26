@@ -26,6 +26,8 @@ cd /to/code/directory/bandtracker
 php artisan migrate --seed
 ```
 
+> Don't forget to add a development url to your Homestead configuration and your hosts file!
+
 If you want to set up a project-based Homestead box:
 
 ```
