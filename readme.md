@@ -22,11 +22,11 @@ If you have a global Homestead box:
 cd /your/homestead/directory
 vagrant up
 vagrant ssh
-cd /to/code/directory/bandtracker
+cd /to/code/directory
 php artisan migrate --seed
 ```
 
-> Don't forget to add a development url to your Homestead configuration and your hosts file!
+> Don't forget to add a development url/IP address to your Homestead configuration and your hosts file!
 
 If you want to set up a project-based Homestead box:
 
@@ -34,12 +34,12 @@ If you want to set up a project-based Homestead box:
 php vendor/bin/homestead make
 vagrant up
 vagrant ssh
-cd /to/code/directory/bandtracker
+cd /to/code/directory
 php artisan migrate --seed
 ```
 
 > By default, this will create a Homestead.yaml file with the default Homestead
-> settings. You should check the Homestead page in Laravel's docs to see how to 
+> settings. You should check the [Homestead](https://laravel.com/docs/master/homestead) page in Laravel's docs to see how to 
 > customize it for your needs.
 
 If you don't want to use Homestead, you can run it locally, but you will need to 
